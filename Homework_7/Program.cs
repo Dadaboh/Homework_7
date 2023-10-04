@@ -51,7 +51,7 @@ namespace Homework_7
             {
                 Console.WriteLine(51);
                 JsonSerializer jsonreader = new JsonSerializer();
-                //jsonreader.Deserialize<Cost>
+                
 
             }
         }
