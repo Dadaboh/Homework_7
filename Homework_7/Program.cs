@@ -40,23 +40,63 @@ namespace Homework_7
         {
             List<Cost> costList = new List<Cost>();
 
-            Cost firstCost = new Cost { id = 3, description = "test desc", sum = 11.11, type = "test type", date = DateTime.Now };
-            Cost secondCost = new Cost { id = 4, description = "test desc 2", sum = 22.22, type = "test type 2", date = DateTime.Now };
+            Cost usersCost = new Cost();
 
-            using(var sr = new StreamReader(filePath))
+            Console.WriteLine("Введіть опис витрати:");
+            usersCost.description = Console.ReadLine();
+
+
+            string tmpString;
+
+            {
+                double tmpDouble;
+
+                do
+                {
+                    Console.WriteLine("Введіть суму витрати:");
+                    tmpString = Console.ReadLine();
+
+                }
+                while (!double.TryParse(tmpString, out tmpDouble));
+
+                usersCost.sum = tmpDouble;
+            }
+
+            Console.WriteLine("Введіть тип витрати:");
+            usersCost.type = Console.ReadLine();
+
+
+            {
+                DateTime tmpDateTime;
+
+                do
+                {
+                    Console.WriteLine("Введіть дату витрати:");
+                    tmpString = Console.ReadLine();
+
+                }
+                while (!DateTime.TryParse(tmpString, out tmpDateTime));
+
+                usersCost.date = tmpDateTime;
+            }
+
+
+
+            using (var sr = new StreamReader(filePath))
             {
                 var jsonData = sr.ReadToEnd();
                 costList = JsonConvert.DeserializeObject<List<Cost>>(jsonData) ?? new List<Cost>();
             }
 
-            costList.Add(firstCost);
-            costList.Add(secondCost);
+            costList.Add(usersCost);
 
             using (var sw = new StreamWriter(filePath))
             {
                 var jsonData = JsonConvert.SerializeObject(costList);
                 sw.WriteLine(jsonData);
             };
+
+            UserChoise(filePath);
         }
         private static void ShowStatistics()
         {
@@ -106,7 +146,6 @@ namespace Homework_7
     //[Serializable]
     public class Cost
     {
-        public int id { get; set; }
         public string description { get; set; }
         public double sum { get; set; }
         public string type { get; set; }
