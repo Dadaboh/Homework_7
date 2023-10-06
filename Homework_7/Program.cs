@@ -103,9 +103,27 @@ namespace Homework_7
 
             UserChoise(filePath);
         }
-        private static void ShowStatistics()
+        private static void ShowStatistics(string filePath)
         {
-            
+            var costList = new List<Cost>();          
+
+            using (var sr = new StreamReader(filePath))
+            {
+                var jsonData = sr.ReadToEnd();
+                costList = JsonConvert.DeserializeObject<List<Cost>>(jsonData) ?? new List<Cost>();
+            }
+
+            List<double> sumsList = new List<double>();
+
+
+            foreach (var cost in costList)
+            {
+                sumsList.Add(cost.sum);            
+            }
+
+            Console.WriteLine("Максимальна сума: " + sumsList.Max() + " Середня сума: " + (sumsList.Any() ? sumsList.Average() : 0) + " Мінімальна сума: " + sumsList.Min() + "\n");
+
+            UserChoise(filePath);
         }
 
         private static void UserChoise(string filePath)
@@ -133,7 +151,7 @@ namespace Homework_7
                             break;
 
                         case 3:
-                            ShowStatistics();
+                            ShowStatistics(filePath);
                             break;
                     }
 
