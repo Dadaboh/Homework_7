@@ -12,10 +12,6 @@ namespace Homework_7
 
         static void Main(string[] args)
         {
-            Console.WindowTop = 0;
-            Console.WindowLeft = 0;
-            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
-
             Console.OutputEncoding = Encoding.UTF8;
 
             var filePath = (Directory.GetCurrentDirectory() + "\\Costs.json");
