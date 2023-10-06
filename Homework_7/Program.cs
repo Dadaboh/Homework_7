@@ -26,12 +26,17 @@ namespace Homework_7
 
         private static void ShowCostsHistory(string filePath)
         {
-            List<Cost> costList = new List<Cost>();
+            var costList = new List<Cost>();
 
             using (var sr = new StreamReader(filePath))
             {
-                Console.WriteLine("Історія всіх витрат:");
-                Console.WriteLine(sr.ReadToEnd());
+                var jsonData = sr.ReadToEnd();
+                costList = JsonConvert.DeserializeObject<List<Cost>>(jsonData) ?? new List<Cost>();
+            }
+
+            foreach (var cost in costList)
+            {
+                Console.WriteLine("Опис: " + cost.description + " Сума: " + cost.sum + " Тип: " + cost.type + " Дата: " + cost.date + "\n");
             }
 
             UserChoise(filePath);        
